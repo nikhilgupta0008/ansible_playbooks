@@ -1,0 +1,8 @@
+---
+ - hosts: ukg
+   name : using command line arguments here now
+   vars:
+     x: 45
+   tasks:
+   - debug:
+       msg: "Here is my x value {{x}}"

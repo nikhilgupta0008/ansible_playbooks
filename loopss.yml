@@ -1,0 +1,14 @@
+---
+ - name: Installing multiple packages here
+   hosts: ukg
+   become: true
+   tasks:
+     - name: Installing packages
+       yum: name="{{item}}" state=latest
+       with_items:
+        - make
+        - gcc
+        - httpd
+        - wget
+     - debug:
+         msg: "All tasks are completed..well done!!"

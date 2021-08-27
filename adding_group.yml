@@ -1,0 +1,7 @@
+---
+ - name: Let's add a group
+   hosts: localhost
+   become: true
+   tasks:
+     - name: Adding group
+       group: name=devops state=present

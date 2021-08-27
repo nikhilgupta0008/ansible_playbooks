@@ -1,0 +1,18 @@
+---
+ - hosts: ukg
+   become: true
+   tasks:
+   - block:
+     - name: installing httpd for RHEL os family
+       yum: name=httpd state=present
+     - name: starting httpd service on RHEL
+       service: name=httpd state=started
+     when: ansible_os_family=="Redhat"
+   - block:   
+     - name: installing apache2 for ubuntu
+       apt: name=apache2 state=present
+     - name: starting apache2 service on Debian
+       service: name=apache2 state=started
+     when: ansible_os_family=="Debian"
+   - debug:
+       msg: "Successfully completed all the tasks"  

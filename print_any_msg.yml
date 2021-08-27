@@ -1,0 +1,8 @@
+---
+ - hosts: ukg
+   become: true
+   tasks:
+   - debug:
+       msg:
+        - "this is my file"
+        - "and these are the basic ansible concepts"

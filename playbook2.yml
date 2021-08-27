@@ -1,0 +1,11 @@
+---
+- hosts: ukg
+  become: true
+  tasks:
+  - name: pre-requisite for nginx
+    command: sudo amazon-linux-extras enable nginx1 
+  - name: installing nginx
+    package: name=nginx state=present
+  - name: starting nginx
+    service: name=nginx state=started enabled=true
+

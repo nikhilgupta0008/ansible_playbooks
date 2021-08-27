@@ -1,0 +1,19 @@
+---
+- hosts: ukg
+  become: true
+  tasks:
+  - name: Create Dir
+    file: path=/opt/sk state=directory mode=775 owner=slave group=slave
+  - name: Download Maven
+    get_url: url=https://downloads.apache.org/maven/maven-3/3.8.2/source/apache-maven-3.8.2-src.tar.gz dest=/opt/sk/apache-maven-3.8.2-src.tar.gz
+  - name: Extract Maven
+    command: tar xvf /opt/sk/apache-maven-3.8.2-src.tar.gz -C /opt/sk
+  - name: Move to a smaller directory
+    command: cp -R /opt/sk/apache-maven-3.8.2 /opt/sk/maven
+  - name: Update Profile
+    copy: content="export M2_HOME=/opt/sk/maven \n" dest=/etc/profile.d/maven.sh
+  - lineinfile:
+     path: /etc/profile.d/maven.sh
+     line: 'export PATH=${M2_HOME}/bin:${PATH}'
+  - name: Source profile
+    shell: source /etc/profile.d/maven.sh

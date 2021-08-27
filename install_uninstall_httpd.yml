@@ -1,0 +1,6 @@
+---
+ - hosts: ukg
+   become: true
+   tasks:
+   - name: installing {{pkg}}
+     package: name="{{pkg}}" state="{{required_state}}"

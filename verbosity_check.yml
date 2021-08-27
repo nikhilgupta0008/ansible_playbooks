@@ -1,0 +1,12 @@
+---
+ - name: usage of verbosity module 
+   hosts: ukg
+   become: true
+   tasks:
+   - name: Verbosity as default
+     debug:
+       msg: "this is default msg"
+   - name: Verbosity is 2
+     debug:
+       msg: "Verbosity is 2"
+       verbosity: 2

@@ -1,0 +1,16 @@
+---
+ - hosts: ukg
+   become: true
+   tasks:
+    - block:
+       - command: "ls /tmp/"
+         register: tmp_out
+       - command: "ls /tmp/etc/"
+         register: etc_out
+       - command: "ls /etc/cron.d"
+         register: cron_out  
+      ignore_errors: yes
+
+    - debug: var=tmp_out
+    - debug: var=etc_out
+    - debug: var=cron_out

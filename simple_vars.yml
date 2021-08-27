@@ -1,0 +1,11 @@
+---
+ - name: Using variables
+   hosts: localhost
+   become: true
+   vars:
+      x: 5
+      y: 6
+   tasks:
+    - name: printing x and y values
+      debug:
+        msg: value of x is {{x}} and value of y is {{y}}

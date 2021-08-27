@@ -1,0 +1,6 @@
+---
+- hosts: ukg
+  become: true
+  tasks:
+  - name: copying file
+    copy: src=/tmp/file1.txt dest=/tmp

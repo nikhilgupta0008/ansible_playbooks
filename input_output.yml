@@ -1,0 +1,22 @@
+---
+ - hosts: ukg
+   become: true
+   vars_prompt:
+     - name: var_usercomment
+       private: no
+       prompt: "Enter the user's first name and last name"
+     - name: var_username
+       private: no
+       prompt: "Enter the username for the user"
+     - name: var_password
+       private: yes
+       prompt: "Enter the password"
+       confirm: yes
+
+   tasks:
+     - name: Adding the user "{{var_username}}"
+       user:
+         name: "{{var_username}}"
+         comment: "{{var_usercomment}}"
+         shell: /bin/bash
+         password: "{{var_password}}"

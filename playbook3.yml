@@ -1,0 +1,12 @@
+---
+- hosts: ukg
+  become: true
+  tasks:
+  - name: uninstalling nginx
+    package: name=nginx state=absent
+  - name: installing tomcat
+    package: name=tomcat state=latest
+  - name: starting tomact
+    service: name=tomcat state=started enabled=true
+  
+
