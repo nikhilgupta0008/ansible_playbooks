@@ -1,0 +1,18 @@
+---
+ - name: Using archive module here
+   hosts: ukg
+   become: true
+   tasks:
+    - name: create a directory
+      file: path=/tmp/new_nikhil state=directory mode=777
+    - name: creating multiple files in new_nikhil directory
+      file: path="{{item}}" state=touch
+      with_items:
+       - '/tmp/new_nikhil/file1.txt'
+       - '/tmp/new_nikhil/file2.txt'
+       - '/tmp/new_nikhil/file3.txt'
+    - name: making tar of this directory
+      archive:
+         path: /tmp/new_nikhil
+         dest: /tmp/new_nikhil.tar
+         format: tar
