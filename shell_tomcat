@@ -1,0 +1,26 @@
+---
+ - name: Shell examples
+   hosts: localhost
+   become: true
+   tasks:
+     - name: Start tomcat
+       async: 10
+       poll: 0
+       shell:
+        "./startup.sh"
+       
+       args:
+         chdir: "/apps/tomcat/tomcat8/bin"
+       register: datecmd
+       tags: datecmd
+
+
+     - name: validate if tomcat is UP
+       tags: tomvalidate
+       wait_for:
+           host: "localhost"
+           port: 8080
+           delay: 10
+           timeout: 30
+           state: started
+           msg: "Tomcat server is not running"
