@@ -1,0 +1,58 @@
+---
+ - name: Setting up LAMP Website
+   hosts: localhost
+   become: true
+   tasks:
+     - name: latest version of all packages should be installed
+       yum:
+         name:
+           - firewalld
+           - httpd
+           - mariadb-server
+           - php
+           - php-mysql
+         state: latest
+
+     - name: firewalld enabled and running
+       service:
+          name: firewalld
+          enabled: true
+          state: started
+
+
+     - name: firewalld permits http service
+       firewalld:
+         service: http
+         permanent: true
+         state: enabled
+         immediate: yes
+
+     - name: copy mime.types file
+       copy: 
+         src: /etc/mime.types 
+         dest: /etc/httpd/conf/mime.types
+         remote_src: yes
+
+     - name: httpd enabled and running
+       service:
+          name: httpd
+          state: started
+          enabled: true
+
+     - name: mariadb enabled and running
+       service:
+          name: mariadb
+          state: started
+          enabled: true
+
+     - name: copy the php page from remote using get_url
+       get_url:
+           url: "https://www.middlewareinventory.com/index.php"
+           dest: /var/www/html/index.php
+           mode: 0644
+
+     - name: test the webpage/website we have setup
+       uri:
+         url: http://{{ansible_hostname}}/index.php
+         status_code: 200
+
