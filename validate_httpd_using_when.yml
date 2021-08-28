@@ -1,0 +1,14 @@
+---
+ - name: Validating if httpd is running or not
+   hosts: localhost
+   become: true
+   tasks:
+    - name: "Determine if httpd is installed"
+      shell: httpd
+      register: validatehttpd
+      
+    - name: Ensure apache is at the latest version
+      yum:
+       name: httpd
+       state: latest
+      when: "'not found' in validatehttpd.stdout"

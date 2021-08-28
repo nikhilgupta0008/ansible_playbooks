@@ -1,0 +1,13 @@
+---
+ - name: using changed_when module to check httpd running or not
+   hosts: localhost
+   become: true
+   become_user: root
+   tasks:
+    - name: "Start the apache httpd server"
+      shell: "httpd -k start"
+      register: starthttpdout
+      changed_when: "'already running' not in starthttpdout.stdout"
+      
+    - debug: 
+        msg: "{{starthttpdout.stdout}}"
